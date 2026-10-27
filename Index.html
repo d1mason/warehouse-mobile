@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>СкладМобайл</title>
+    
+    <!-- PWA: манифест и мета-теги -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c3e50">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232c3e50'/><text x='50' y='68' font-size='50' text-anchor='middle' fill='white'>📦</text></svg>">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ЭКРАН 1: АВТОРИЗАЦИЯ -->
+    <div id="screen-login" class="screen active">
+        <div class="login-container">
+            <h1>СкладМобайл</h1>
+            <p class="subtitle">Мобильная часть WMS</p>
+            
+            <input type="text" id="login-input" placeholder="Логин (admin)" value="admin">
+            <input type="password" id="password-input" placeholder="Пароль (12345)" value="12345">
+            
+            <button onclick="login()" class="btn-primary">Войти</button>
+            <p id="login-error" class="error-msg"></p>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 2: ГЛАВНОЕ МЕНЮ (Задачи) -->
+    <div id="screen-menu" class="screen">
+        <header class="app-header">
+            <h2>Задачи на смену</h2>
+            <button onclick="logout()" class="btn-logout">Выйти</button>
+        </header>
+        
+        <div class="task-list">
+            <div class="task-card" onclick="startScan('Приемка товара')">
+                <div class="task-icon">📥</div>
+                <div class="task-info">
+                    <h3>Приемка товара</h3>
+                    <p>Ожидает: 3 поставки</p>
+                </div>
+            </div>
+            <div class="task-card" onclick="startScan('Отгрузка товара')">
+                <div class="task-icon">📤</div>
+                <div class="task-info">
+                    <h3>Отгрузка товара</h3>
+                    <p>Ожидает: 5 заказов</p>
+                </div>
+            </div>
+            <div class="task-card" onclick="startScan('Инвентаризация')">
+                <div class="task-icon">📋</div>
+                <div class="task-info">
+                    <h3>Инвентаризация</h3>
+                    <p>Зона: A, B, C</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 3: СКАНИРОВАНИЕ -->
+    <div id="screen-scan" class="screen">
+        <header class="app-header">
+            <button onclick="goToMenu()" class="btn-back">← Назад</button>
+            <h2 id="scan-title">Сканирование</h2>
+        </header>
+        
+        <div class="scanner-area">
+            <div class="camera-view">
+                <p>📷 Камера активна</p>
+                <div class="scan-frame"></div>
+            </div>
+            <button onclick="simulateScan()" class="btn-scan">Сканировать штрих-код</button>
+            <p id="scan-result" class="scan-result"></p>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 4: КАРТОЧКА ТОВАРА -->
+    <div id="screen-product" class="screen">
+        <header class="app-header">
+            <button onclick="goToMenu()" class="btn-back">← Назад</button>
+            <h2>Информация о товаре</h2>
+        </header>
+        <div class="product-card">
+            <h3 id="product-name">Товар</h3>
+            <p><strong>Артикул:</strong> <span id="product-sku">-</span></p>
+            <p><strong>Ячейка:</strong> <span id="product-cell">-</span></p>
+            <p><strong>Количество:</strong> <span id="product-qty">-</span> шт.</p>
+            <button onclick="confirmAction()" class="btn-primary">Подтвердить</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
